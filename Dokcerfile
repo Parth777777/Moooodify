@@ -1,31 +1,36 @@
-# Use a stable Python base image
+# ---------- Base Image ----------
 FROM python:3.10-slim
 
-# Prevent Python from writing pyc files
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# ---------- Environment Settings ----------
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# Set working directory
+# ---------- Working Directory ----------
 WORKDIR /app
 
-# Copy everything
-COPY . /app
+# ---------- Install System Dependencies ----------
+# These are required for OpenCV and TensorFlow to run properly on slim images
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y libgl1-mesa-glx
+# ---------- Copy Dependency File ----------
+COPY requirements.txt .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# ---------- Install Python Packages ----------
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# Preload DeepFace models to avoid Render runtime download errors
-RUN python -c "from deepface import DeepFace; DeepFace.build_model('Facenet512')"
+# ---------- Copy Application Code ----------
+COPY . .
 
-# Set DeepFace cache directory to writable location
-ENV DEEPFACE_HOME=/tmp
-
-# Expose and use Render's dynamic port
+# ---------- Expose Port ----------
 EXPOSE 10000
-ENV PORT=10000
 
-# Start the app with Gunicorn (Render expects this)
+# ---------- Start the App ----------
+# Gunicorn will handle the production WSGI server
 CMD gunicorn app:app --bind 0.0.0.0:$PORT
