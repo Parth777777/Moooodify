@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2vh;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  position: relative;
+}
+
+/* --- CAMERA FEED --- */
+/* --- FIX OVERLAY SHIFT --- */
+#feed {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+  max-width: 500px;
+  height: 50vh;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  margin: 0 auto;
+}
+#message{
+  font-size: 10px;
+}
+#vid {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  filter: brightness(0.9) contrast(1.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Make overlay perfectly centered */
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.15);
+  display: none; /* show it dynamically when mood detection starts */
+}
+
+
+/* Overlay stays centered */
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  display: none;
+}
+
+/* --- DETECT BUTTON --- */
+#cambtn {
+  margin-top: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#but {
+  background: white;
+  color: #3a1c71;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: pulse 2s infinite ease-in-out;
+}
+
+#but:hover {
+  background: #3a1c71;
+  color: white;
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+}
+
+/* Subtle glow animation */
+@keyframes pulse {
+  0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.8); }
+  100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
+}
+
+/* --- OUTPUT SECTION --- */
+#output {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2vh;
+  width: 100%;
+}
+
+#feeling {
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+#controls {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 2vh;
+}
+
+#controls p {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.buttons {
+  display: flex;
+  gap: 2vw;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#current,
+#improve {
+  background: white;
+  color: #3a1c71;
+  font-weight: 600;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+#current:hover,
+#improve:hover {
+  background: #3a1c71;
+  color: white;
+  transform: scale(1.08);
+}
+
+/* ✅ RESPONSIVE */
+@media (max-width: 768px) {
+  #feed {
+    width: 85vw;
+    height: 45vh;
+  }
+
+  #but {
+    font-size: 18px;
+    padding: 12px 30px;
+  }
+
+  #feeling {
+    font-size: 1.5rem;
+  }
+
+  .buttons button {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}

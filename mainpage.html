@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moooodify</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+
+  <script src="mainscript.js" defer></script>
+
+  <div id="container">
+    <p id="message">Make sure that lighting around you is bright and your entire face is visible for accurate results.</p>
+
+    <div id="camera">
+      <div id="feed">
+        <video id="vid" playsinline autoplay muted></video>
+      </div>
+
+      <canvas id="canvas" height="224" width="224"></canvas>
+
+      <div id="cambtn">
+        <button id="but" type="button">Detect My Mood</button>
+      </div>
+    </div>
+
+    <div id="output">
+      <div id="feeling"></div>
+
+      <div id="controls">
+        <p>What kind of playlist would you prefer?</p>
+        <div class="buttons">
+          <button id="current" onclick="showplaylists_current()">Explore My Mood</button>
+          <button id="improve" onclick="showplaylists_improve()">Make Me Feel Better</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
